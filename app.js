@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from "cors"
 import  DBconnect  from "./src/models/DBconnect.js";
+import productRouter from "./src/routers/product.router.js";
 
 
 
@@ -10,6 +11,11 @@ app.use(cors());
 const PORT = process.env.PORT || 8000;
 
 const db = new DBconnect()
+
+app.use('/api', productRouter)
+
+
+
 
 db.connect().then( () => {
     console.log('DB connected')
