@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt';
-import User from '../models/userSchema.js';
+import User from '../../models/userSchesma/user.js';
+import jwt from 'jsonwebtoken';
 
-let secretKey = 'huydo'
+let secretKey = 'huydo';
 
 class AuthController {
     login = async(req,res) => {

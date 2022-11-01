@@ -1,4 +1,4 @@
-import { secretKey } from "../controllers/auth.controller.js";
+import { secretKey } from "../controllers/authController/login.controller.js";
 import jwt from "jsonwebtoken";
 
 class AuthMiddleware {
