@@ -54,5 +54,24 @@ class ProductController {
         }
 
     }
+    async getHouseForRent(req, res) {
+        try {
+
+            let houseForRents = await HouseForRent.find().populate('typeRoom')
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            return res.status(200).send({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                houseForRents: houseForRents
+            })
+
+        } catch (err) {
+            return res.json({
+                status: 'error',
+                message: 'Error getting House for rent'
+            })
+        }
+    }
 }
 export default ProductController;

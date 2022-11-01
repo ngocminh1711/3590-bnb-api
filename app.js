@@ -2,7 +2,7 @@ import express from 'express';
 import cors from "cors"
 import  DBconnect  from "./src/models/DBconnect.js";
 import productRouter from "./src/routers/product.router.js";
-import * as bodyParser from "express";
+
 
 import bodyParser from "express";
 
@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 8000;
 
 const db = new DBconnect()
+
 app.use(bodyParser.json());
 
 
