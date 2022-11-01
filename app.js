@@ -4,13 +4,12 @@ import  DBconnect  from "./src/models/DBconnect.js";
 import Routes from './src/routers/Auth/auth.js';
 import bp from "body-parser";
 
-
 const app = express();
 
 const PORT = process.env.PORT || 8000;
 
 const db = new DBconnect()
-
+app.use(cors())
 db.connect().then( () => {
     console.log('DB connected')
 }).catch(err => {
