@@ -1,15 +1,17 @@
 import express from 'express';
 import cors from "cors"
 import  DBconnect  from "./src/models/DBconnect.js";
+
 import productRouter from "./src/routers/product.router.js";
 
-
 import bodyParser from "express";
+
+import Routes from './src/routers/Auth/auth.js';
+
 
 
 
 const app = express();
-app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -32,8 +34,9 @@ db.connect().then( () => {
     console.log(err.message)
 })
 
-
-
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
+app.use('/api/auth',Routes)
 
 
 
