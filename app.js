@@ -6,8 +6,6 @@ import productRouter from "./src/routers/product.router.js";
 
 import bodyParser from "express";
 
-
-
 const app = express();
 app.use(cors());
 
@@ -19,22 +17,13 @@ const db = new DBconnect()
 
 app.use(bodyParser.json());
 
-
-
 app.use('/api/products', productRouter)
-
-
-
 
 db.connect().then( () => {
     console.log('DB connected')
 }).catch(err => {
     console.log(err.message)
 })
-
-
-
-
 
 
 app.listen(PORT, () => {
