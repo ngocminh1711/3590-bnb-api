@@ -1,5 +1,6 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
+import HousesForRentSchema from "../models/product.schema/housesForRent.schema.js";
 
 
 class ProductController {
@@ -57,6 +58,7 @@ class ProductController {
     }
 
 
+
     async getHouseForRentById(req, res) {
         try {
             let id = req.params.id
@@ -77,7 +79,6 @@ class ProductController {
 
     async getHouseForRent(req, res) {
         try {
-
             let houseForRents = await HouseForRent.find().populate('typeRoom')
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -86,11 +87,38 @@ class ProductController {
                 message: 'Get house for rent successfully',
                 houseForRents: houseForRents
             })
-
         } catch (err) {
             return res.json({
                 status: 'error',
                 message: 'Error getting House for rent'
+            })
+        }
+    }
+    async searchHouseForRent(req, res) {
+        try {
+            let keyword = req.params.keyword;
+            let houseForRent = await HouseForRent.find( {$or: [{address: {$regex: `${keyword}`, $options: 'i'}}
+
+                ]})
+            if (!houseForRent) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'House for rent not found'
+                })
+            }
+            else {
+
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'Search house for rent successfully',
+                    houseForRent: houseForRent
+                })
+            }
+        }
+        catch (err) {
+            return res.status(404).send({
+                status: 'error',
+                message: 'House for rent not found'
             })
         }
     }
