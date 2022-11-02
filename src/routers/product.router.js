@@ -18,5 +18,8 @@ productRouter.post('/',upload.none(), async (req, res, next)=> {
 productRouter.get('/type-room', async (req, res, next) => {
     productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
 })
+productRouter.get('/:id', async (req, res, next) => {
+    productController.getHouseForRent(req, res, next).catch(res => res.status(500).json('Server error'));
+})
 
 export default productRouter;

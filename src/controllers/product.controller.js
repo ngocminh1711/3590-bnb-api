@@ -55,5 +55,25 @@ class ProductController {
         }
 
     }
+
+    async getHouseForRent(req, res) {
+        try {
+            let id = req.params.id
+            let houseForRent = HouseForRent.findOne({_id: id})
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                data : houseForRent
+            })
+        }
+        catch (err) {
+            res.json({
+                status: 'error',
+                message: 'Get House for rent error'
+            })
+        }
+
+    }
 }
 export default ProductController;
