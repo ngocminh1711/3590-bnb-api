@@ -56,6 +56,26 @@ class ProductController {
         }
 
     }
+
+
+    async getHouseForRentById(req, res) {
+        try {
+            let id = req.params.id
+            let houseForRent = HouseForRent.findOne({_id: id})
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                data : houseForRent
+            })
+        }
+        catch (err) {
+            res.json({
+                status: 'error',
+                message: 'Get House for rent error'
+            })
+        }
+
     async getHouseForRent(req, res) {
         try {
             let houseForRents = await HouseForRent.find().populate('typeRoom')
@@ -101,8 +121,6 @@ class ProductController {
                 message: 'House for rent not found'
             })
         }
-
-
     }
 }
 export default ProductController;
