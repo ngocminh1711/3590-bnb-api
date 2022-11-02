@@ -19,7 +19,11 @@ productRouter.get('/type-room', async (req, res, next) => {
     productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
 })
 productRouter.get('/:id', async (req, res, next) => {
-    productController.getHouseForRent(req, res, next).catch(res => res.status(500).json('Server error'));
+    productController.getHouseForRentById(req, res, next).catch(res => res.status(500).json('Server error')
+)
+productRouter.get('/',async function (req, res){
+    console.log(1)
+    productController.getHouseForRent(req, res).catch(res => res.status(500).json('Server error'))})
 })
 
 export default productRouter;

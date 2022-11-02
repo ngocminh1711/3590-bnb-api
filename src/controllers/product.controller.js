@@ -56,7 +56,8 @@ class ProductController {
 
     }
 
-    async getHouseForRent(req, res) {
+
+    async getHouseForRentById(req, res) {
         try {
             let id = req.params.id
             let houseForRent = HouseForRent.findOne({_id: id})
@@ -64,16 +65,34 @@ class ProductController {
             return res.status(200).json({
                 status: 'success',
                 message: 'Get house for rent successfully',
-                data : houseForRent
+                data: houseForRent
             })
-        }
-        catch (err) {
+        } catch (err) {
             res.json({
                 status: 'error',
                 message: 'Get House for rent error'
             })
         }
+    }
 
+    async getHouseForRent(req, res) {
+        try {
+
+            let houseForRents = await HouseForRent.find().populate('typeRoom')
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            return res.status(200).send({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                houseForRents: houseForRents
+            })
+
+        } catch (err) {
+            return res.json({
+                status: 'error',
+                message: 'Error getting House for rent'
+            })
+        }
     }
 }
 export default ProductController;
