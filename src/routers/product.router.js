@@ -18,6 +18,7 @@ productRouter.post('/',upload.none(), async (req, res, next)=> {
 productRouter.get('/type-room', async (req, res, next) => {
     productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
 })
+
 productRouter.get('/',async function (req, res){
     productController.getHouseForRent(req, res).catch(res => res.status(500).json('Server error'));
 })
