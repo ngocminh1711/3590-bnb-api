@@ -21,5 +21,8 @@ productRouter.get('/type-room', async (req, res, next) => {
 productRouter.get('/',async function (req, res){
     productController.getHouseForRent(req, res).catch(res => res.status(500).json('Server error'));
 })
+productRouter.get('/search/:keyword', async (req, res) => {
+    productController.searchHouseForRent(req, res).catch(() => res.status(500).json('Server error'))
+})
 
 export default productRouter;
