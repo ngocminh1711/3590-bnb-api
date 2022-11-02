@@ -7,6 +7,7 @@ class ProductController {
 
 
     async createHouseForRent(req, res) {
+        console.log(req.body);
         try {
             const data = {
                 name: req.body.name,
