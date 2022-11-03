@@ -41,4 +41,7 @@ productRouter.get('/top-house', async (req, res,next) => {
 productRouter.delete('/:id',productController.deleteHouseForRent)
 
 export default productRouter 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0a0252fbdc38e5d272bc148fd8488b9e0e3643b9
