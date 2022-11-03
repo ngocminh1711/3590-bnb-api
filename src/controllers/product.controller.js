@@ -1,27 +1,37 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 
+
 class ProductController {
 
     async createHouseForRent(req, res) {
-        console.log(req.body);
         try {
 
             const data = {
                 name: req.body.name,
                 address: req.body.address,
-                typeRoom: req.body.typeRoom,
                 numberOfBedrooms: req.body.numberOfBedrooms,
                 numberOfBathrooms: req.body.numberOfBathrooms,
                 roomRates: req.body.roomRates,
                 description: req.body.description,
                 image_backdrop: req.body.image_backdrop,
                 image_view: req.body.image_view,
+                TypeRoom: req.body.typeRoom,
             }
 
-
-            let houseForRent = new HouseForRent(data);
+            let houseForRent = new HouseForRent({
+                name: data.name,
+                address: data.address,
+                numberOfBedrooms: data.numberOfBedrooms,
+                numberOfBathrooms: data.numberOfBathrooms,
+                roomRates: data.roomRates,
+                description: data.description,
+                image_backdrop: data.image_backdrop,
+                image_view: data.image_view,
+                typeRoom: data.TypeRoom,
+            });
             await houseForRent.save()
+
 
             return res.status(200).json({
                 status: 'success',
@@ -43,34 +53,42 @@ class ProductController {
           err.message
 
     }
-  }
-  async createHouseForRent(req, res) {
-    console.log(req.body);
-    try {
-      const data = {
-        name: req.body.name,
-        address: req.body.address,
-        typeRoom: req.body.typeRoom,
-        numberOfBedrooms: req.body.numberOfBedrooms,
-        numberOfBathrooms: req.body.numberOfBathrooms,
-        roomRates: req.body.roomRates,
-        description: req.body.description,
-        image_backdrop: req.body.image_backdrop,
-        image_view: req.body.image_view,
-      };
 
-      let houseForRent = new HouseForRent(data);
-      await houseForRent.save();
+    async getHouseForRentById(req, res) {
+        try {
+            let id = req.params.id
 
-      return res.status(200).json({
-        status: "success",
-        message: "House For Rent create successfully",
-      });
-    } catch (err) {
-      return res.json({
-        status: "error",
-        message: "Create error",
-      });
+            let houseForRent = await HouseForRent.findOne({_id: id}).populate("typeRoom")
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                data: houseForRent
+            })
+        } catch (err) {
+            res.json({
+                status: 'error',
+                message: 'Get House for rent error'
+            })
+        }
+    }
+
+    async getHouseForRent(req, res) {
+        try {
+            let houseForRents = await HouseForRent.find().populate('typeRoom')
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            return res.status(200).send({
+                status: 'success',
+                message: 'Get house for rent successfully',
+                houseForRents: houseForRents
+            })
+        } catch (err) {
+            return res.json({
+                status: 'error',
+                message: 'Error getting House for rent'
+            })
+        }
     }
   }
 
