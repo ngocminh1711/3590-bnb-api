@@ -31,4 +31,4 @@ productRouter.get('/search/:keyword', async (req, res) => {
 
 productRouter.delete('/:id',productController.deleteHouseForRent)
 
-export default productRouter
+export default productRouter 
