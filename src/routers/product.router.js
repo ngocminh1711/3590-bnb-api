@@ -22,7 +22,7 @@ productRouter.get('/type-room',
 
 
 
-productRouter.get('/:id', async (req, res, next) => {
+productRouter.get('/get-house-for-rent-by-id/:id', async (req, res, next) => {
     productController.getHouseForRentById(req, res, next).catch(res => res.status(500).json('Server error'));
 })
 
@@ -36,12 +36,11 @@ productRouter.get('/search/:keyword', async (req, res) => {
 })
 
 productRouter.get('/top-house', async (req, res,next) => {
-    console.log(1)
+    productController.getTopHouseForRent(req,res, next).catch(() => res.status(500).json('Server error'))
 })
-productRouter.delete('/:id',productController.deleteHouseForRent)
+productRouter.delete('/:id',async (req, res, next )=> {
+    productController.deleteHouseForRent(req,res,next).catch(() => res.status(500).json('Server error'))
+})
 
-export default productRouter 
-<<<<<<< HEAD
+export default productRouter;
 
-=======
->>>>>>> 0a0252fbdc38e5d272bc148fd8488b9e0e3643b9
