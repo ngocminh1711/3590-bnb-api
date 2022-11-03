@@ -8,10 +8,6 @@ import productRouter from "./src/routers/product.router.js";
 import bodyParser  from "body-parser";
 import authRouter from './src/routers/auth.router.js';
 import userRouter from './src/routers/user.router.js';
-
-
-
-
 const app = express();
 
 
