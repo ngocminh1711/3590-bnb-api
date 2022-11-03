@@ -142,6 +142,26 @@ class ProductController {
 
     }
 
+    async getTopHouseForRent(req, res) {
+        try {
+            let topHouseForRent = await HouseForRent.find().sort({ numberOfTenants : -1}).limit(4)
+            console.log(topHouseForRent)
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'get top house for rent successfully',
+                data: topHouseForRent
+            })
+        }
+        catch (err) {
+            res.status(404).json({
+                status: 'error',
+                message: 'Not found top house for rent'
+            })
+        }
+
+    }
+
 }
 
 export default ProductController;

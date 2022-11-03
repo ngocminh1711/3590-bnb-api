@@ -13,6 +13,7 @@ const housesForRentSchema = new Schema(
         description: String,
         image_backdrop: String,
         image_view: [],
+        numberOfTenants: Number,
     })
 
 const HouseForRent = mongoose.model('HouseForRent', housesForRentSchema)
