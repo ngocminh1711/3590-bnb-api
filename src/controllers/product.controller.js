@@ -3,25 +3,35 @@ import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 
 
 class ProductController {
+
     async createHouseForRent(req, res) {
-        console.log(req.body);
         try {
 
             const data = {
                 name: req.body.name,
                 address: req.body.address,
-                typeRoom: req.body.typeRoom,
                 numberOfBedrooms: req.body.numberOfBedrooms,
                 numberOfBathrooms: req.body.numberOfBathrooms,
                 roomRates: req.body.roomRates,
                 description: req.body.description,
                 image_backdrop: req.body.image_backdrop,
                 image_view: req.body.image_view,
+                TypeRoom: req.body.typeRoom,
             }
 
-
-            let houseForRent = new HouseForRent(data);
+            let houseForRent = new HouseForRent({
+                name: data.name,
+                address: data.address,
+                numberOfBedrooms: data.numberOfBedrooms,
+                numberOfBathrooms: data.numberOfBathrooms,
+                roomRates: data.roomRates,
+                description: data.description,
+                image_backdrop: data.image_backdrop,
+                image_view: data.image_view,
+                typeRoom: data.TypeRoom,
+            });
             await houseForRent.save()
+
 
             return res.status(200).json({
                 status: 'success',
@@ -34,26 +44,35 @@ class ProductController {
                 message: 'Create error'
             })
         }
+
+  async deleteHouseForRent(req, res) {
+    try {
+       await HouseForRent.findByIdAndRemove(req.params.id);
+          res.status(200).json("delete success!")
+    } catch (err) {
+          err.message
+
     }
 
-
-    async getTypeRoom (req, res) {
+    async getHouseForRentById(req, res) {
         try {
-            const type = await TypeRoom.find()
+            let id = req.params.id
+
+            let houseForRent = await HouseForRent.findOne({_id: id}).populate("typeRoom")
+
             return res.status(200).json({
                 status: 'success',
-                message: 'Get type room successfully',
-                data : type
+                message: 'Get house for rent successfully',
+                data: houseForRent
             })
-        }
-        catch (err) {
-            return res.json({
+        } catch (err) {
+            res.json({
                 status: 'error',
-                message: 'Get TypeRoom error'
+                message: 'Get House for rent error'
             })
         }
-
     }
+
     async getHouseForRent(req, res) {
         try {
             let houseForRents = await HouseForRent.find().populate('typeRoom')
@@ -64,7 +83,6 @@ class ProductController {
                 message: 'Get house for rent successfully',
                 houseForRents: houseForRents
             })
-
         } catch (err) {
             return res.json({
                 status: 'error',
@@ -72,6 +90,23 @@ class ProductController {
             })
         }
     }
+  }
+
+  async getTypeRoom(req, res) {
+    try {
+      const type = await TypeRoom.find();
+      return res.status(200).json({
+        status: "success",
+        message: "Get type room successfully",
+        data: type,
+      });
+    } catch (err) {
+      return res.json({
+        status: "error",
+        message: "Get TypeRoom error",
+      });
+    }
+
     async searchHouseForRent(req, res) {
         try {
             console.log(req.params)
@@ -102,6 +137,68 @@ class ProductController {
                 message: 'House for rent not found'
             })
         }
+
+  }
+
+  async getHouseForRentById(req, res) {
+    try {
+      let id = req.params.id;
+      let houseForRent = HouseForRent.findOne({ _id: id });
+
+      return res.status(200).json({
+        status: "success",
+        message: "Get house for rent successfully",
+        data: houseForRent,
+      });
+    } catch (err) {
+      res.json({
+        status: "error",
+        message: "Get House for rent error",
+      });
     }
+  }
+  async getHouseForRent(req, res) {
+    try {
+      let houseForRents = await HouseForRent.find().populate("typeRoom");
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      return res.status(200).send({
+        status: "success",
+        message: "Get house for rent successfully",
+        houseForRents: houseForRents,
+      });
+    } catch (err) {
+      return res.json({
+        status: "error",
+        message: "Error getting House for rent",
+      });
+    }
+  }
+  async searchHouseForRent(req, res) {
+    try {
+      let keyword = req.params.keyword;
+      let houseForRent = await HouseForRent.find({
+        $or: [{ address: { $regex: `${keyword}`, $options: "i" } }],
+      });
+      if (!houseForRent) {
+        return res.status(404).send({
+          status: "error",
+          message: "House for rent not found",
+        });
+      } else {
+        return res.status(200).send({
+          status: "success",
+          message: "Search house for rent successfully",
+          houseForRent: houseForRent,
+        });
+      }
+    } catch (err) {
+      return res.status(404).send({
+        status: "error",
+        message: "House for rent not found",
+      });
+
+    }
+  }
 }
 export default ProductController;
