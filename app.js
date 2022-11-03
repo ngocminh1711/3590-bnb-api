@@ -18,6 +18,7 @@ const db = new DBconnect()
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('', authRouter);
 
 
@@ -31,10 +32,6 @@ db.connect().then( () => {
 }).catch(err => {
     console.log(err.message)
 })
-
-
-app.use(bodyParser.urlencoded({ extended: true }))
-
 
 
 
