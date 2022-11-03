@@ -1,14 +1,12 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
-import HousesForRentSchema from "../models/product.schema/housesForRent.schema.js";
 
 
 class ProductController {
-
-
     async createHouseForRent(req, res) {
         console.log(req.body);
         try {
+
             const data = {
                 name: req.body.name,
                 address: req.body.address,
@@ -76,10 +74,13 @@ class ProductController {
     }
     async searchHouseForRent(req, res) {
         try {
+            console.log(req.params)
             let keyword = req.params.keyword;
-            let houseForRent = await HouseForRent.find( {$or: [{address: {$regex: `${keyword}`, $options: 'i'}}
-
-                ]})
+            let typeRooms = await TypeRoom.find({$or: [{name: {$regex: `${keyword}`, $options: 'i'}}]})
+            let houseForRent = await HouseForRent.find( {$or: [{address: {$regex: `${keyword}`, $options: 'i'}},
+                    {name: {$regex: `${keyword}`, $options: 'i'}},
+                    {typeRoom: typeRooms}
+                ]}).populate('typeRoom')
             if (!houseForRent) {
                 return res.status(404).send({
                     status: 'error',
@@ -101,8 +102,6 @@ class ProductController {
                 message: 'House for rent not found'
             })
         }
-
-
     }
 }
 export default ProductController;
