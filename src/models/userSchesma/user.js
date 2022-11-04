@@ -6,19 +6,32 @@ const UserSchesma = new Schema(
       type: "String",
       require: true,
     },
+    // name:{
+    //   type:"String",
+    //   default:function(){
+    //     if(this.username){
+    //       return this.username
+    //     }
+    //     return null;
+    //   }
+    // },
     email: {
       type: "String",
       require: true,
       unique: true,
     },
     password: { type: "String" },
-    fromGoogle: {
-      type: "Boolean",
-      default: false,
-    },
     image: {
       type: "String",
     },
+    phone:{
+      type: Number,
+      default:''
+    }, 
+    address: {
+      type: "String",
+      default:""
+    }
   },
   { timestamps: true }
 );

@@ -21,6 +21,14 @@ const UserSchesma = new Schema(
     email_verify:{
         type:Boolean,
         default:false
+    },
+    phone: {
+      type: Number,
+      default: ''
+    },
+    address: {
+      type: String,
+      default:""
     }
   },
   { timestamps: true }

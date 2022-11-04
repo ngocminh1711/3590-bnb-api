@@ -1,40 +1,49 @@
-import bcrypt from 'bcrypt';
-import User from '../../models/userSchesma/user.js';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import User from "../../models/userSchesma/user.js";
+import jwt from "jsonwebtoken";
 
-let secretKey = 'huydo';
+let secretKey = "huydo";
 
 class AuthController {
-    login = async(req,res) => {
-        let loginForm = req.body;
-        console.log(loginForm);
-        let user = await User.findOne({
-            username : loginForm.username,
+  login = async (req, res) => {
+    let loginForm = req.body;
+    console.log(loginForm);
+    let user = await User.findOne({
+      username: loginForm.username,
+    });
+    if (!user) {
+      res.status(401).json({
+        message: "User isn't existed !!",
+      });
+    } else {
+      let comparePassword = await bcrypt.compare(
+        loginForm.password,
+        user.password
+      );
+      if (!comparePassword) {
+        res.status(401).json({
+          message: "Password is wrong !!",
         });
-        if(!user){
-            res.status(401).json({
-                message: "User isn't existed !!"
-            })
-        }else{
-            let comparePassword = await bcrypt.compare(loginForm.password, user.password);
-            if(!comparePassword){
-                res.status(401).json({
-                    message : "Password is wrong !!"
-                })
-            }else{
-                let payload = {
-                    username: user.username,
-                    role: user.role
-                }
-                let accessToken = await jwt.sign(payload, secretKey, {
-                    expiresIn: 36000
-                });
-                res.status(200).json({
-                    token: accessToken
-                })
-            }
-        }
+      } else {
+        let payload = {
+          id: user._id,
+          username: user.username,
+
+          email: user.email,
+          image: user.image,
+          role: user.role,
+          phone: user.phone,
+          address: user.address,
+        };
+        let accessToken = await jwt.sign(payload, secretKey, {
+          expiresIn: 36000,
+        });
+        res.status(200).json({
+          token: accessToken,
+        });
+      }
     }
+  };
 }
 
 export default AuthController;
