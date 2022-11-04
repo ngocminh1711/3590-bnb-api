@@ -11,6 +11,7 @@ class GoogleLoginController {
       console.log(req.body);
       let data = {
         username: req.body.name,
+        name: req.body.name,
         email: req.body.email,
         google_id: req.body.sub,
         image: req.body.picture,
@@ -27,6 +28,7 @@ class GoogleLoginController {
         let payload = {
           id: user._id,
           username: user.username,
+          name: user.name,
           email: user.email,
           image: user.picture,
           role: user.role,
@@ -52,7 +54,7 @@ class GoogleLoginController {
           } else {
             let payload = {
               username: req.body.name,
-
+              name: req.body.name,
               email: req.body.email,
               image: req.body.picture,
               role: req.body.role,

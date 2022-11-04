@@ -6,15 +6,15 @@ const UserSchesma = new Schema(
       type: "String",
       require: true,
     },
-    // name:{
-    //   type:"String",
-    //   default:function(){
-    //     if(this.username){
-    //       return this.username
-    //     }
-    //     return null;
-    //   }
-    // },
+    name:{
+      type:"String",
+      default:function(){
+        if(this.username){
+          return this.username
+        }
+        return '';
+      }
+    },
     email: {
       type: "String",
       require: true,

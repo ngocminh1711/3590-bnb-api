@@ -18,6 +18,7 @@ productRouter.get('/type-room',
     async (req, res, next) => {
         productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
     })
+    //sdsd
 
 
 
