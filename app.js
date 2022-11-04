@@ -1,9 +1,6 @@
 import express from 'express';
 import cors from "cors"
 import  DBconnect  from "./src/models/DBconnect.js";
-
-
-
 import productRouter from "./src/routers/product.router.js";
 import bodyParser  from "body-parser";
 import authRouter from './src/routers/auth.router.js';
