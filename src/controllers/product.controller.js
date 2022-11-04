@@ -17,6 +17,7 @@ class ProductController {
                 image_backdrop: req.body.image_backdrop,
                 image_view: req.body.image_view,
                 TypeRoom: req.body.typeRoom,
+                numberOfTenants: req.body.numberOfTenants
             }
 
             let houseForRent = new HouseForRent({
@@ -29,6 +30,7 @@ class ProductController {
                 image_backdrop: data.image_backdrop,
                 image_view: data.image_view,
                 typeRoom: data.TypeRoom,
+                numberOfTenants: data.numberOfTenants,
             });
             await houseForRent.save()
 
@@ -111,7 +113,7 @@ class ProductController {
 
     async searchHouseForRent(req, res) {
         try {
-            console.log(req.params)
+
             let keyword = req.params.keyword;
             let typeRooms = await TypeRoom.find({$or: [{name: {$regex: `${keyword}`, $options: 'i'}}]})
             let houseForRent = await HouseForRent.find({
@@ -137,6 +139,32 @@ class ProductController {
             return res.status(404).send({
                 status: 'error',
                 message: 'House for rent not found'
+            })
+        }
+
+    }
+
+    async getTopHouseForRent(req, res) {
+        try {
+
+            const topHouseForRent = await HouseForRent.find().sort({ numberOfTenants : -1}).limit(4)
+          if (topHouseForRent) {
+
+              return res.status(200).send({
+                  status: 'success',
+                  message: 'Get top house for rent successfully',
+                  topHouseForRent: topHouseForRent
+              })
+          }
+          else {
+              return res.status(404).json({ status : 'top house not found', message: 'Get top error'})
+          }
+
+        }
+        catch (err) {
+            res.status(404).json({
+                status: 'error',
+                message: 'Not found top house for rent'
             })
         }
 
