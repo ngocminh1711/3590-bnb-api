@@ -15,6 +15,7 @@ class GoogleLoginController {
         email: req.body.email,
         google_id: req.body.sub,
         image: req.body.picture,
+        backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
         role: "user",
         email_verify: req.body.email_verified,
         phone: "",
@@ -26,11 +27,12 @@ class GoogleLoginController {
 
       if (user) {
         let payload = {
-          id: user._id,
+          id: user._id,  
           username: user.username,
           name: user.name,
           email: user.email,
-          image: user.picture,
+          image: user.image,
+          backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
           role: user.role,
           phone: user.phone,
           address: user.address
@@ -57,6 +59,7 @@ class GoogleLoginController {
               name: req.body.name,
               email: req.body.email,
               image: req.body.picture,
+              backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
               role: req.body.role,
               phone: "",
               address: "",
