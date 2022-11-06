@@ -3,7 +3,7 @@ import User from "../../models/userSchesma/user.js";
 import jwt from "jsonwebtoken";
 import UserGoogle from "../../models/userSchesma/userGoogle.js";
 
-let secretKey = 'huydo';
+let secretKey = "huydo";
 
 class GoogleLoginController {
   loginGoogle = async (req, res, next) => {
@@ -11,11 +11,15 @@ class GoogleLoginController {
       console.log(req.body);
       let data = {
         username: req.body.name,
+        name: req.body.name,
         email: req.body.email,
         google_id: req.body.sub,
         image: req.body.picture,
+        backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
         role: "user",
         email_verify: req.body.email_verified,
+        phone: "",
+        address: "",
       };
       let user = await UserGoogle.findOne({
         google_id: data.google_id,
@@ -23,10 +27,15 @@ class GoogleLoginController {
 
       if (user) {
         let payload = {
+          id: user._id,  
           username: user.username,
+          name: user.name,
           email: user.email,
-          image: user.picture,
+          image: user.image,
+          backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
           role: user.role,
+          phone: user.phone,
+          address: user.address
         };
         let accessToken = jwt.sign(payload, secretKey, {
           expiresIn: 36000,
@@ -47,9 +56,13 @@ class GoogleLoginController {
           } else {
             let payload = {
               username: req.body.name,
+              name: req.body.name,
               email: req.body.email,
               image: req.body.picture,
+              backdrop_Image: "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
               role: req.body.role,
+              phone: "",
+              address: "",
             };
             let accessToken = jwt.sign(payload, secretKey, {
               expiresIn: 36000,

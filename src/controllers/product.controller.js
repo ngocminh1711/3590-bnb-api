@@ -4,6 +4,8 @@ import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 class ProductController {
   async createHouseForRent(req, res) {
     try {
+      await houseForRent.save();
+
       const data = {
         name: req.body.name,
         address: req.body.address,
@@ -14,6 +16,7 @@ class ProductController {
         image_backdrop: req.body.image_backdrop,
         image_view: req.body.image_view,
         TypeRoom: req.body.typeRoom,
+        numberOfTenants: req.body.numberOfTenants,
       };
 
       let houseForRent = new HouseForRent({
@@ -26,9 +29,9 @@ class ProductController {
         image_backdrop: data.image_backdrop,
         image_view: data.image_view,
         typeRoom: data.TypeRoom,
+        numberOfTenants: data.numberOfTenants,
       });
       await houseForRent.save();
-
       return res.status(200).json({
         status: "success",
         message: "House For Rent create successfully",
@@ -51,7 +54,9 @@ class ProductController {
   }
   async changeStatusHouseForRent(req, res) {
     let id = req.params.id;
-    let houseForRent = await HouseForRent.findByIdAndUpdate(id , {status: "booked"})
+    let houseForRent = await HouseForRent.findByIdAndUpdate(id, {
+      status: "booked",
+    });
     try {
       if (houseForRent) {
         res.status(200).json("update complete");
@@ -101,25 +106,8 @@ class ProductController {
     }
   }
 
-  async getTypeRoom(req, res) {
-    try {
-      const type = await TypeRoom.find();
-      return res.status(200).json({
-        status: "success",
-        message: "Get type room successfully",
-        data: type,
-      });
-    } catch (err) {
-      return res.json({
-        status: "error",
-        message: "Get TypeRoom error",
-      });
-    }
-  }
-
   async searchHouseForRent(req, res) {
     try {
-      console.log(req.params);
       let keyword = req.params.keyword;
       let typeRooms = await TypeRoom.find({
         $or: [{ name: { $regex: `${keyword}`, $options: "i" } }],
@@ -147,6 +135,30 @@ class ProductController {
       return res.status(404).send({
         status: "error",
         message: "House for rent not found",
+      });
+    }
+  }
+
+  async getTopHouseForRent(req, res) {
+    try {
+      const topHouseForRent = await HouseForRent.find()
+        .sort({ numberOfTenants: -1 })
+        .limit(4);
+      if (topHouseForRent) {
+        return res.status(200).send({
+          status: "success",
+          message: "Get top house for rent successfully",
+          topHouseForRent: topHouseForRent,
+        });
+      } else {
+        return res
+          .status(404)
+          .json({ status: "top house not found", message: "Get top error" });
+      }
+    } catch (err) {
+      res.status(404).json({
+        status: "error",
+        message: "Not found top house for rent",
       });
     }
   }

@@ -3,6 +3,8 @@ import mongoose, {Schema} from "mongoose";
 
 const housesForRentSchema = new Schema(
     {
+        
+        userId: {type:"String",required:true},
         name: String,
         address: String,
         status:{type:String,default:"empty"},
@@ -13,6 +15,7 @@ const housesForRentSchema = new Schema(
         description: String,
         image_backdrop: String,
         image_view: [],
+        numberOfTenants: Number,
     })
 
 const HouseForRent = mongoose.model('HouseForRent', housesForRentSchema)
