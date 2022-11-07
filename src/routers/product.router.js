@@ -19,9 +19,6 @@ productRouter.get('/type-room',
 
         productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
     })
-    //sdsd
-
-
 
 productRouter.get('/get-house-for-rent-by-id/:id', async (req, res, next) => {
     productController.getHouseForRentById(req, res, next).catch(res => res.status(500).json('Server error'));
