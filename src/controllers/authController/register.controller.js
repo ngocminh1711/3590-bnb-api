@@ -11,7 +11,6 @@ export const Register = async (req, res, next) => {
         email: req.body.email,
         password: hash,
       });
-      console.log(newUser);
       await newUser.save();
       res.status(200).json({ success: true, data: newUser });
     // } else {
