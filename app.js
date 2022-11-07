@@ -24,7 +24,6 @@ db.connect().then( () => {
     console.log(err.message)
 })
 
-
 app.listen(PORT, () => {
     console.log(`Server is listening on http://localhost:${PORT}`);
 });
