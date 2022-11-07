@@ -7,6 +7,7 @@ class ProductController {
       await houseForRent.save();
 
       const data = {
+          
         name: req.body.name,
         address: req.body.address,
         numberOfBedrooms: req.body.numberOfBedrooms,
@@ -18,7 +19,7 @@ class ProductController {
         TypeRoom: req.body.typeRoom,
         numberOfTenants: req.body.numberOfTenants,
       };
-
+      
       let houseForRent = new HouseForRent({
         name: data.name,
         address: data.address,
@@ -162,6 +163,7 @@ class ProductController {
       });
     }
   }
+  async 
 }
 
 export default ProductController;

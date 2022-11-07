@@ -21,22 +21,5 @@ export const ChangePassword = async (req, res, next) => {
   } catch (err) {
     res.status(403).json("change failed");
   }
-//   const user_id = req.params.id;
-//         const data = req.body
-//         const user = await User.findOne({ _id: user_id })
-//         try {
-//             if (user) {
-//                 if (data.currentPassword == user.password) {
-//                     await UserModel.findOneAndUpdate({ _id: user_id }, { password: data.N })
-//                     res.status(200).json({type:'success', message: 'Change password success!'})
-//                 } else {
-//                     res.status(200).json({type:'error', message: 'Wrong old password! '})
-//                 }
-//             } else {
-//                 res.status(200).json({type: 'notexist', message: 'Not exist user!'})
-//             }
-//         } catch (err) {
-//             res.status(500).json('Server error')
-//         }
 };
 export const UpdateProfileUser = async (req, res, next) => {};
