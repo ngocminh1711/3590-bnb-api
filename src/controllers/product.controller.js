@@ -170,6 +170,88 @@ class ProductController {
 
     }
 
+    async getVipHouse(req, res) {
+        try {
+            let typeRoomVip = await TypeRoom.findOne({name:'VIP'})
+
+
+            let vipHouse = await HouseForRent.find({typeRoom:typeRoomVip}).populate('typeRoom')
+            if(vipHouse){
+                return res.status(200).send({
+                    status: 'success',
+                    message:'get Vip House successfully',
+                    vipHouse: vipHouse
+                })
+            }
+            else {
+                return res.status(404).json({status: 'not found', message:'Get Vip House error'})
+            }
+        }
+        catch (err) {
+            res.status(404).json({status: 'error', message: 'not found'})
+        }
+    }
+    async getNormalHouse(req, res) {
+        try {
+            let typeRoomNormal = await TypeRoom.find( { name: { $in: ['Single Room','Double Room','President Room'] } } )
+
+            let normalHouse = await HouseForRent.find({typeRoom:typeRoomNormal}).populate('typeRoom')
+            console.log(normalHouse)
+            if(normalHouse){
+                return res.status(200).send({
+                    status: 'success',
+                    message:'get Normal House successfully',
+                    normalHouse: normalHouse
+                })
+            }
+            else {
+                return res.status(404).json({status: 'not found', message:'Get Normal House error'})
+            }
+        }
+        catch (err) {
+            res.status(404).json({status: 'error', message: 'not found'})
+        }
+    }
+    async getOneBedRoom(req, res) {
+        try {
+            let oneBedRoom = await HouseForRent.find({ numberOfBedrooms : 1})
+            if(oneBedRoom){
+                return res.status(200).send({
+                    status: 'success',
+                    message:'get One Bed Room successfully',
+                    oneBedRoom: oneBedRoom
+                })
+            }
+            else {
+                return res.status(404).json({status: 'not found', message:'Get One bed room error'})
+            }
+        }
+        catch (err) {
+            res.status(404).json({status: 'error', message: 'not found bed room '})
+        }
+    }
+
+    async getMultipleBedRoom(req, res){
+        try {
+            let multipleBedRoom = await HouseForRent.find( { numberOfBedrooms: { $in: [2,3,4,5,6,7,8,9,10] } } )
+            if(multipleBedRoom){
+                return res.status(200).send({
+                    status: 'success',
+                    message:'get Multiple Bed Room successfully',
+                    multipleBedRoom: multipleBedRoom
+                })
+            }
+            else {
+                return res.status(404).json({status: 'not found', message:'Get Multiple bed room error'})
+            }
+        }
+        catch (err) {
+            res.status(404).json({status: 'error', message: 'not found bed room '})
+        }
+    }
+
+
+
 }
 
 export default ProductController;

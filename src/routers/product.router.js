@@ -1,6 +1,8 @@
 import express from 'express';
 import ProductController from "../controllers/product.controller.js";
 import multer from 'multer' ;
+import req from "express/lib/request.js";
+import res from "express/lib/response.js";
 
 const upload = multer()
 
@@ -39,6 +41,19 @@ productRouter.get('/top-house', async (req, res,next) => {
 productRouter.delete('/:id',async (req, res, next )=> {
     productController.deleteHouseForRent(req,res,next).catch(() => res.status(500).json('Server error'))
 })
+productRouter.get('/vip-house', async (req, res, next)=> {
+    productController.getVipHouse(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/normal-house', async (req, res, next)=> {
+    productController.getNormalHouse(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/one-bed-room', async (req, res, next)=> {
+    productController.getOneBedRoom(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/multi-bed-room', async (req, res, next)=> {
+    productController.getMultipleBedRoom(req, res, next).catch(()=> res.status(500).json('Server error'))
+})
+
 
 export default productRouter;
 
