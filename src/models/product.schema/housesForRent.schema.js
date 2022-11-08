@@ -16,6 +16,10 @@ const housesForRentSchema = new Schema({
   numberOfTenants: Number,
   likes: { type: [String], default: [] },
   dislikes:{ type: [String], default: [] },
+  status: {
+    type: Schema.Types.ObjectId,
+    ref: "houseStatus",
+  },
 });
 
 const HouseForRent = mongoose.model("HouseForRent", housesForRentSchema);

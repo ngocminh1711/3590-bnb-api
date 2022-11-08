@@ -1,13 +1,12 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
+import houseStatus from "../models/product.schema/houseStatusSchema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 
 class ProductController {
   async createHouseForRent(req, res) {
     try {
-      await houseForRent.save();
-
+      console.log(req.body);
       const data = {
-          
         name: req.body.name,
         address: req.body.address,
         numberOfBedrooms: req.body.numberOfBedrooms,
@@ -18,8 +17,9 @@ class ProductController {
         image_view: req.body.image_view,
         TypeRoom: req.body.typeRoom,
         numberOfTenants: req.body.numberOfTenants,
+        Status: req.body.status,
       };
-      
+
       let houseForRent = new HouseForRent({
         name: data.name,
         address: data.address,
@@ -31,8 +31,10 @@ class ProductController {
         image_view: data.image_view,
         typeRoom: data.TypeRoom,
         numberOfTenants: data.numberOfTenants,
+        status: data.Status,
       });
       await houseForRent.save();
+
       return res.status(200).json({
         status: "success",
         message: "House For Rent create successfully",
@@ -45,14 +47,22 @@ class ProductController {
     }
   }
 
-  
+  async deleteHouseForRent(req, res) {
+    try {
+      await HouseForRent.findByIdAndRemove(req.params.id);
+      res.status(200).json("delete success!");
+    } catch (err) {
+      err.message;
+    }
+  }
+
   async getHouseForRentById(req, res) {
     try {
       let id = req.params.id;
 
-      let houseForRent = await HouseForRent.findOne({ _id: id }).populate(
-        "typeRoom"
-      );
+      let houseForRent = await HouseForRent.findOne({ _id: id })
+        .populate("typeRoom")
+        .populate("status");
 
       return res.status(200).json({
         status: "success",
@@ -69,9 +79,8 @@ class ProductController {
 
   async getHouseForRent(req, res) {
     try {
-      let houseForRents = await HouseForRent.find().populate("typeRoom");
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      let houseForRents = await HouseForRent.find()
+        .populate("typeRoom").populate('status')
       return res.status(200).send({
         status: "success",
         message: "Get house for rent successfully",
@@ -81,6 +90,38 @@ class ProductController {
       return res.json({
         status: "error",
         message: "Error getting House for rent",
+      });
+    }
+  }
+
+  async getTypeRoom(req, res) {
+    try {
+      const type = await TypeRoom.find();
+      return res.status(200).json({
+        status: "success",
+        message: "Get type room successfully",
+        data: type,
+      });
+    } catch (err) {
+      return res.json({
+        status: "error",
+        message: "Get TypeRoom error",
+      });
+    }
+  }
+
+  async getHouseStatus(req, res) {
+    try {
+      const type = await houseStatus.find();
+      return res.status(200).json({
+        status: "success",
+        message: "Get status successfully",
+        data: type,
+      });
+    } catch (err) {
+      return res.json({
+        status: "error",
+        message: "Get status error",
       });
     }
   }
@@ -141,30 +182,6 @@ class ProductController {
       });
     }
   }
-  async deleteHouseForRent(req, res) {
-    try {
-      await HouseForRent.findByIdAndRemove(req.params.id);
-      res.status(200).json("delete success!");
-    } catch (err) {
-      err.message;
-    }
-  }
-  async changeStatusHouseForRent(req, res) {
-    let id = req.params.id;
-    let houseForRent = await HouseForRent.findByIdAndUpdate(id, {
-      status: "booked",
-    });
-    try {
-      if (houseForRent) {
-        res.status(200).json("update complete");
-      } else {
-        res.status(404).json("update failed");
-      }
-    } catch (err) {
-      res.status(404).json(err);
-    }
-  }
-
 }
 
 export default ProductController;
