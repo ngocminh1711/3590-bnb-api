@@ -7,7 +7,6 @@ let secretKey = "huydo";
 class AuthController {
   login = async (req, res) => {
     let loginForm = req.body;
-    console.log(loginForm);
     let user = await User.findOne({
       username: loginForm.username,
     });
@@ -28,9 +27,10 @@ class AuthController {
         let payload = {
           id: user._id,
           username: user.username,
-
+          name: req.body.name,
           email: user.email,
           image: user.image,
+          backdrop_Image: user.backdrop_Image,
           role: user.role,
           phone: user.phone,
           address: user.address,

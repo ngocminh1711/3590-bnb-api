@@ -1,4 +1,4 @@
-import mongoose,{ Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const UserSchesma = new Schema(
   {
@@ -6,14 +6,14 @@ const UserSchesma = new Schema(
       type: "String",
       require: true,
     },
-    name:{
-      type:"String",
-      default:function(){
-        if(this.username){
-          return this.username
+    name: {
+      type: "String",
+      default: function () {
+        if (this.username) {
+          return this.username;
         }
-        return '';
-      }
+        return "";
+      },
     },
     email: {
       type: "String",
@@ -25,13 +25,25 @@ const UserSchesma = new Schema(
       type: "String",
       default :"https://a0.muscache.com/defaults/user_pic-225x225.png?v=3"
     },
-    phone:{
+    backdrop_Image: {
+      type: String,
+      default:
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80",
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    phone: {
       type: Number,
-      default:''
-    }, 
+      default: "",
+    },
     address: {
       type: "String",
-      default:""
+      default: "",
+    },
+    google_id: {
+     type: "String"
     }
   },
   { timestamps: true }

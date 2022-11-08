@@ -45,29 +45,7 @@ class ProductController {
     }
   }
 
-  async deleteHouseForRent(req, res) {
-    try {
-      await HouseForRent.findByIdAndRemove(req.params.id);
-      res.status(200).json("delete success!");
-    } catch (err) {
-      err.message;
-    }
-  }
-  async changeStatusHouseForRent(req, res) {
-    let id = req.params.id;
-    let houseForRent = await HouseForRent.findByIdAndUpdate(id, {
-      status: "booked",
-    });
-    try {
-      if (houseForRent) {
-        res.status(200).json("update complete");
-      } else {
-        res.status(404).json("update failed");
-      }
-    } catch (err) {
-      res.status(404).json(err);
-    }
-  }
+  
   async getHouseForRentById(req, res) {
     try {
       let id = req.params.id;
@@ -163,7 +141,30 @@ class ProductController {
       });
     }
   }
-  async 
+  async deleteHouseForRent(req, res) {
+    try {
+      await HouseForRent.findByIdAndRemove(req.params.id);
+      res.status(200).json("delete success!");
+    } catch (err) {
+      err.message;
+    }
+  }
+  async changeStatusHouseForRent(req, res) {
+    let id = req.params.id;
+    let houseForRent = await HouseForRent.findByIdAndUpdate(id, {
+      status: "booked",
+    });
+    try {
+      if (houseForRent) {
+        res.status(200).json("update complete");
+      } else {
+        res.status(404).json("update failed");
+      }
+    } catch (err) {
+      res.status(404).json(err);
+    }
+  }
+
 }
 
 export default ProductController;
