@@ -1,10 +1,10 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
+const houseStatusSchema = new Schema({
+  name: {
+    type: String,
+  },
+});
 
-const houseStatusSchema = new Schema(
-    {
-        name: String,
-    })
-
-const houseStatus = mongoose.model('houseStatus', houseStatusSchema)
+const houseStatus = mongoose.model("houseStatus", houseStatusSchema);
 export default houseStatus;
