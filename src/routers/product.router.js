@@ -1,40 +1,45 @@
-import express from 'express';
+import express from "express";
 import ProductController from "../controllers/product.controller.js";
-import multer from 'multer' ;
-import req from "express/lib/request.js";
-import res from "express/lib/response.js";
+import multer from "multer";
 
-const upload = multer()
-
+const upload = multer();
 
 const productRouter = express.Router();
-const productController = new ProductController;
+const productController = new ProductController();
 
+productRouter.post("/", upload.none(), async (req, res, next) => {
+  console.log(1);
+  productController
+    .createHouseForRent(req, res, next)
+    .catch((res) => res.status(500).json("Server error"));
+});
+productRouter.get("/type-room", async (req, res, next) => {
+  productController
+    .getTypeRoom(req, res, next)
+    .catch((res) => res.status(500).json("Server error"));
+});
 
+productRouter.get("/house-status", async (req, res, next) => {
+  productController
+    .getHouseStatus(req, res, next)
+    .catch((res) => res.status(500).json("Server error"));
+});
 
-productRouter.post('/', upload.none(),
-    async (req, res, next) => {
-        productController.createHouseForRent(req, res, next).catch(res => res.status(500).json('Server error'));
-    })
-productRouter.get('/type-room',
-    async (req, res, next) => {
+productRouter.get("/get-house-for-rent-by-id/:id", async (req, res, next) => {
+  productController
+    .getHouseForRentById(req, res, next)
+    .catch((res) => res.status(500).json("Server error"));
+});
 
-        productController.getTypeRoom(req, res, next).catch(res => res.status(500).json('Server error'));
-    })
+productRouter.get("/", async function (req, res) {
+  productController.getHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
+});
 
-productRouter.get('/get-house-for-rent-by-id/:id', async (req, res, next) => {
-    productController.getHouseForRentById(req, res, next).catch(res => res.status(500).json('Server error'));
-})
-
-productRouter.get('/', async function (req, res) {
-    productController.getHouseForRent(req, res).catch(res => res.status(500).json('Server error'))
-
-})
-
-productRouter.get('/search/:keyword', async (req, res) => {
-    productController.searchHouseForRent(req, res).catch(() => res.status(500).json('Server error'))
-})
-
+productRouter.get("/search/:keyword", async (req, res) => {
+  productController
+    .searchHouseForRent(req, res)
+    .catch(() => res.status(500).json("Server error"));
+});
 productRouter.get('/top-house', async (req, res,next) => {
     productController.getTopHouseForRent(req,res, next).catch(() => res.status(500).json('Server error'))
 })
