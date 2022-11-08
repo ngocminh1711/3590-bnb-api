@@ -17,7 +17,8 @@ class ProductController {
                 image_backdrop: req.body.image_backdrop,
                 image_view: req.body.image_view,
                 TypeRoom: req.body.typeRoom,
-                numberOfTenants: req.body.numberOfTenants
+                numberOfTenants: req.body.numberOfTenants,
+                status: req.body.status
             }
 
             let houseForRent = new HouseForRent({
@@ -31,6 +32,7 @@ class ProductController {
                 image_view: data.image_view,
                 typeRoom: data.TypeRoom,
                 numberOfTenants: data.numberOfTenants,
+                status: data.status,
             });
             await houseForRent.save()
 
