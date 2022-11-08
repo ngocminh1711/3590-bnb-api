@@ -13,7 +13,7 @@ const housesForRentSchema = new Schema(
         image_backdrop: String,
         image_view: [],
         numberOfTenants: Number,
-        status: {type: Schema.Types.ObjectId, ref: 'houseStatus', default:'Ready to rent'}
+        status: {type: Schema.Types.ObjectId, ref: 'houseStatus'}
     })
 
 const HouseForRent = mongoose.model('HouseForRent', housesForRentSchema)

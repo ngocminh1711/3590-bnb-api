@@ -12,6 +12,7 @@ const productController = new ProductController;
 
 productRouter.post('/', upload.none(),
     async (req, res, next) => {
+    console.log(1)
         productController.createHouseForRent(req, res, next).catch(res => res.status(500).json('Server error'));
     })
 productRouter.get('/type-room',
