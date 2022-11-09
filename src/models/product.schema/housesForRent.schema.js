@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const housesForRentSchema = new Schema({
-  userId: { type: "String"}, 
+  userId:String,
   name: String,
   address: String,
   status: { type: String, default: "empty" },

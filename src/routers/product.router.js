@@ -18,7 +18,6 @@ productRouter.get('/type-room',
 const productController = new ProductController();})
 
 productRouter.post("/", upload.none(), async (req, res, next) => {
-  console.log(1);
   productController
     .createHouseForRent(req, res, next)
     .catch((res) => res.status(500).json("Server error"));
@@ -45,23 +44,9 @@ productRouter.get("/", async function (req, res) {
   productController.getHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
 });
 
-productRouter.get('/get-house-for-rent-by-id/:id', async (req, res, next) => {
-    productController.getHouseForRentById(req, res, next).catch(res => res.status(500).json('Server error'));
-})
-productRouter.get('/', async function (req, res) {
-    productController.getHouseForRent(req, res).catch(res => res.status(500).json('Server error'))
-})
-
-productRouter.get('/search/:keyword', async (req, res) => {
-    productController.searchHouseForRent(req, res).catch(() => res.status(500).json('Server error'))
-})
-productRouter.get('/top-house', async (req, res,next) => {
-    productController.getTopHouseForRent(req,res, next).catch(() => res.status(500).json('Server error'))
-})
-
-productRouter.delete('/:id',async (req, res, next )=> {
-    productController.deleteHouseForRent(req,res,next).catch(() => res.status(500).json('Server error'))
-})
+// productRouter.get("/:userid", async function (req, res) {
+//   productController.getUserHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
+// });
 
 productRouter.get("/search/:keyword", async (req, res) => {
   productController
@@ -85,6 +70,10 @@ productRouter.get('/one-bed-room', async (req, res, next)=> {
 })
 productRouter.get('/multi-bed-room', async (req, res, next)=> {
     productController.getMultipleBedRoom(req, res, next).catch(()=> res.status(500).json('Server error'))
+})
+
+productRouter.get('/:id', async(req,res)=>{
+  productController.userHouse(req,res).catch(()=>res.status(500).json('Server error'))
 })
 
 
