@@ -2,6 +2,7 @@ import express from "express";
 import ProductController from "../controllers/product.controller.js";
 import multer from "multer";
 
+
 const upload = multer();
 
 const productRouter = express.Router();
@@ -58,7 +59,21 @@ productRouter.get('/one-bed-room', async (req, res, next)=> {
 productRouter.get('/multi-bed-room', async (req, res, next)=> {
     productController.getMultipleBedRoom(req, res, next).catch(()=> res.status(500).json('Server error'))
 })
-
+productRouter.get('/one-bath-room', async (req, res, next)=> {
+    productController.getOneBathRoom(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/multi-bath-room', async (req, res, next)=> {
+    productController.getMultipleBathRoom(req, res, next).catch(()=> res.status(500).json('Server error'))
+})
+productRouter.get('/less500', async (req,res,next) =>{
+    productController.getRoomRatesLess500(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/than500', async (req,res,next) =>{
+    productController.getRoomRatesThan500(req, res, next).catch(() => res.status(500).json('Server error'))
+})
+productRouter.get('/than1000', async (req,res,next) =>{
+    productController.getRoomRatesThan1000(req, res, next).catch(() => res.status(500).json('Server error'))
+})
 
 export default productRouter;
 

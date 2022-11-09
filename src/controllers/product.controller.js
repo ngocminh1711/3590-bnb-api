@@ -3,6 +3,8 @@ import houseStatus from "../models/product.schema/houseStatusSchema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 
 
+
+
 class ProductController {
     async createHouseForRent(req, res) {
         try {
@@ -255,6 +257,97 @@ class ProductController {
             }
         } catch (err) {
             res.status(404).json({status: 'error', message: 'not found bed room '})
+        }
+    }
+    async getOneBathRoom(req, res) {
+        try {
+            let oneBathRoom = await HouseForRent.find({numberOfBathrooms: 1})
+            if (oneBathRoom) {
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'get One Bath Room successfully',
+                    oneBathRoom: oneBathRoom
+                })
+            } else {
+                return res.status(404).json({status: 'not found', message: 'Get One bath room error'})
+            }
+        } catch (err) {
+            res.status(404).json({status: 'error', message: 'not found bath room '})
+        }
+    }
+
+    async getMultipleBathRoom(req, res) {
+        try {
+            let multipleBathRoom = await HouseForRent.find({numberOfBathrooms: {$in: [2, 3]}})
+            if (multipleBathRoom) {
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'get Multiple Bath Room successfully',
+                    multipleBathRoom: multipleBathRoom
+                })
+            } else {
+                return res.status(404).json({status: 'not found', message: 'Get Multiple bath room error'})
+            }
+        } catch (err) {
+            res.status(404).json({status: 'error', message: 'not found bath room '})
+        }
+    }
+
+    async getRoomRatesLess500(req, res) {
+        try {
+            let roomRates = await HouseForRent.find({roomRates: {$lt: 500}})
+            if (roomRates) {
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'get room rates less 500 successfully',
+                    roomRates: roomRates
+                })
+            } else {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'get room rates less 500 error',
+                })
+            }
+        } catch (err) {
+            res.status(404).json({status: 'error', message: err.message})
+        }
+    }
+    async getRoomRatesThan500(req, res) {
+        try {
+            let roomRates = await HouseForRent.find({roomRates:{$gte:500 ,$lte:1000}})
+            if(roomRates){
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'get room rates than 500 successfully',
+                    roomRates: roomRates
+                })
+            } else {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'get room rates than 500 error',
+                })
+            }
+        } catch (err) {
+            res.status(404).json({status: 'error', message: err.message})
+        }
+    }
+    async getRoomRatesThan1000(req, res) {
+        try {
+            let roomRates = await HouseForRent.find({roomRates:{$gte:1000}})
+            if(roomRates){
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'get room rates than 1000 successfully',
+                    roomRates: roomRates
+                })
+            } else {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'get room rates than 1000 error',
+                })
+            }
+        } catch (err) {
+            res.status(404).json({status: 'error', message: err.message})
         }
     }
 
