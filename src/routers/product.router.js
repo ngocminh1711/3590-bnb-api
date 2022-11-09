@@ -1,6 +1,9 @@
 import express from 'express';
 import ProductController from "../controllers/product.controller.js";
 import multer from 'multer' ;
+import {editProfileUser} from "../controllers/userController/user.controller.js";
+import routerUser from "./user.router.js";
+import req from "express/lib/request.js";
 
 const upload = multer()
 
@@ -53,5 +56,9 @@ productRouter.delete("/:id", async (req, res, next) => {
     .deleteHouseForRent(req, res, next)
     .catch(() => res.status(500).json("Server error"));
 });
+
+productRouter.patch('/edit/:id', async (req,res) => {
+  productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));
+})
 
 export default productRouter;

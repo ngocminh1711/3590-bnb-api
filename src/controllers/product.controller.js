@@ -183,6 +183,21 @@ class ProductController {
       });
     }
   }
+  async updateHouse(req, res) {
+    try {
+      let data = req.body;
+      let id = req.params.id;
+
+
+      let houseUpdate = await HouseForRent.findOneAndUpdate(id,data)
+      console.log(houseUpdate)
+      return res.status(200).json({ status: "success" , message: "Update successfully"})
+    }
+    catch (err) {
+      return  res.status(404).json({ status: "error", message: "Update error"})
+    }
+
+  }
 }
 
 export default ProductController;
