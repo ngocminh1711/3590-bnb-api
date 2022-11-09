@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const housesForRentSchema = new Schema({
+  userId:String,
   name: String,
   address: String,
   typeRoom: { type: Schema.Types.ObjectId, ref: "TypeRoom" },
