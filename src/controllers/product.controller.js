@@ -2,11 +2,9 @@ import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import houseStatus from "../models/product.schema/houseStatusSchema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
 
-
 class ProductController {
   async createHouseForRent(req, res) {
     try {
-      console.log(req.body);
       const data = {
         name: req.body.name,
         address: req.body.address,
@@ -19,6 +17,7 @@ class ProductController {
         TypeRoom: req.body.typeRoom,
         numberOfTenants: req.body.numberOfTenants,
         Status: req.body.status,
+        userId: req.body.userId,
       };
 
       let houseForRent = new HouseForRent({
@@ -33,6 +32,7 @@ class ProductController {
         typeRoom: data.TypeRoom,
         numberOfTenants: data.numberOfTenants,
         status: data.Status,
+        userId: data.userId,
       });
       await houseForRent.save();
 
@@ -81,7 +81,8 @@ class ProductController {
   async getHouseForRent(req, res) {
     try {
       let houseForRents = await HouseForRent.find()
-        .populate("typeRoom").populate('status')
+        .populate("typeRoom")
+        .populate("status");
       return res.status(200).send({
         status: "success",
         message: "Get house for rent successfully",
@@ -162,9 +163,7 @@ class ProductController {
 
   async getTopHouseForRent(req, res) {
     try {
-      const topHouseForRent = await HouseForRent.find()
-        .sort({ numberOfTenants: -1 })
-        .limit(4);
+      const topHouseForRent = await HouseForRent.find().limit(4);
       if (topHouseForRent) {
         return res.status(200).send({
           status: "success",
@@ -181,6 +180,7 @@ class ProductController {
         status: "error",
         message: "Not found top house for rent",
       });
+      console.log(err.message);
     }
   }
   async updateHouse(req, res) {
@@ -198,6 +198,133 @@ class ProductController {
     }
 
   }
+
+  async getVipHouse(req, res) {
+    try {
+      let typeRoomVip = await TypeRoom.findOne({ name: "VIP" });
+
+      let vipHouse = await HouseForRent.find({
+        typeRoom: typeRoomVip,
+      }).populate("typeRoom");
+      if (vipHouse) {
+        return res.status(200).send({
+          status: "success",
+          message: "get Vip House successfully",
+          vipHouse: vipHouse,
+        });
+      } else {
+        return res
+          .status(404)
+          .json({ status: "not found", message: "Get Vip House error" });
+      }
+    } catch (err) {
+      res.status(404).json({ status: "error", message: "not found" });
+    }
+  }
+
+  async getNormalHouse(req, res) {
+    try {
+      let typeRoomNormal = await TypeRoom.find({
+        name: { $in: ["Single Room", "Double Room", "President Room"] },
+      });
+
+      let normalHouse = await HouseForRent.find({
+        typeRoom: typeRoomNormal,
+      }).populate("typeRoom");
+
+      if (normalHouse) {
+        return res.status(200).send({
+          status: "success",
+          message: "get Normal House successfully",
+          normalHouse: normalHouse,
+        });
+      } else {
+        return res
+          .status(404)
+          .json({ status: "not found", message: "Get Normal House error" });
+      }
+    } catch (err) {
+      res.status(404).json({ status: "error", message: "not found" });
+    }
+  }
+
+  async getOneBedRoom(req, res) {
+    try {
+      let oneBedRoom = await HouseForRent.find({ numberOfBedrooms: 1 });
+      if (oneBedRoom) {
+        return res.status(200).send({
+          status: "success",
+          message: "get One Bed Room successfully",
+          oneBedRoom: oneBedRoom,
+        });
+      } else {
+        return res
+          .status(404)
+          .json({ status: "not found", message: "Get One bed room error" });
+      }
+    } catch (err) {
+      res.status(404).json({ status: "error", message: "not found bed room " });
+    }
+  }
+
+  async getMultipleBedRoom(req, res) {
+    try {
+      let multipleBedRoom = await HouseForRent.find({
+        numberOfBedrooms: { $in: [2, 3, 4, 5, 6, 7, 8, 9, 10] },
+      });
+      if (multipleBedRoom) {
+        return res.status(200).send({
+          status: "success",
+          message: "get Multiple Bed Room successfully",
+          multipleBedRoom: multipleBedRoom,
+        });
+      } else {
+        return res.status(404).json({
+          status: "not found",
+          message: "Get Multiple bed room error",
+        });
+      }
+    } catch (err) {
+      res.status(404).json({ status: "error", message: "not found bed room " });
+    }
+  }
+
+  async userHouse(req, res) {
+    try {
+      let id = req.params.id;
+      let userHouse = await HouseForRent.find({ userId: id })
+        .populate("typeRoom")
+        .populate("status");
+      return res.status(200).send({
+        status: "success",
+        message: "Get user's house successfully",
+        houseForRents: userHouse,
+      });
+    } catch (err) {
+      return res.json({
+        status: "error",
+        message: "Error getting user's House",
+      });
+    }
+  }
+
+  // async getUserHouseForRent(req, res) {
+  //     try {
+  //         let userid = req.params.id
+  //         console.log(userid)
+  //         let userHouse = await HouseForRent.findOne({userId: userid}).populate("typeRoom").populate("status");
+  //         return res.status(200).send({
+  //             status: "success",
+  //             message: "Get user's house successfully",
+  //             houseForRents: userHouse,
+  //         });
+  //     } catch (err) {
+  //         return res.json({
+  //             status: "error",
+  //             message: "Error getting user's House",
+  //         });
+  //     }
+  // }
 }
 
 export default ProductController;
