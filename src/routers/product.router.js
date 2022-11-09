@@ -9,7 +9,6 @@ const productRouter = express.Router();
 const productController = new ProductController();
 
 productRouter.post("/", upload.none(), async (req, res, next) => {
-  console.log(1);
   productController
     .createHouseForRent(req, res, next)
     .catch((res) => res.status(500).json("Server error"));
@@ -74,6 +73,11 @@ productRouter.get('/than500', async (req,res,next) =>{
 productRouter.get('/than1000', async (req,res,next) =>{
     productController.getRoomRatesThan1000(req, res, next).catch(() => res.status(500).json('Server error'))
 })
+
+productRouter.get('/:id', async(req,res)=>{
+  productController.userHouse(req,res).catch(()=>res.status(500).json('Server error'))
+})
+
 
 export default productRouter;
 
