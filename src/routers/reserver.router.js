@@ -15,5 +15,10 @@ reserverRouter.get("/:id", (req, res) => {
       .getBookingHouse(req, res)
       .catch((res) => res.status(500).json("Server error"));
 });
+reserverRouter.get("/history-booking/:id", (req, res) => {
+  reseverController
+      .getHistoryBooking(req, res)
+      .catch((res) => res.status(500).json("Server error"));
+})
 
 export default reserverRouter;

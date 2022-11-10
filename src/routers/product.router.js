@@ -73,7 +73,8 @@ productRouter.get('/:id', async(req,res)=>{
 
 
 productRouter.patch('/edit/:id', async (req,res) => {
-  productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));
+    console.log(1)
+    productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));
 })
 
 export default productRouter;

@@ -17,18 +17,17 @@ class ReseverController {
         }
     }
 
-    async getBookingHouse(req,res) {
-        try{
+    async getBookingHouse(req, res) {
+        try {
             let id = req.params.id;
             let houseId = await HouseForRent.find({userId: id}).select("userId")
 
             let listHouseIds = [];
             for (const h of houseId) {
-                listHouseIds.push( h._id.toString())
+                listHouseIds.push(h._id.toString())
             }
 
             let listBooking = await Resever.find({houseId: {'$in': listHouseIds}});
-
 
 
             return res.status(200).json({
@@ -36,13 +35,31 @@ class ReseverController {
                 listBooking: listBooking,
             })
 
-        }catch(err){
+        } catch (err) {
             return res.status(404).json({
                 message: err.message,
             });
         }
     }
+
+    async getHistoryBooking(req, res) {
+        try {
+            let id = req.params.id;
+            let data = await Resever.find({ tenantId : id})
+
+            return res.status(200).json({
+                message: "get history booking successfully",
+                historyBooking: data
+            })
+        } catch (err) {
+
+            return res.status(404).json({
+                message: err.message,
+            })
+        }
+    }
 }
+
 //add
 
 export default ReseverController;
