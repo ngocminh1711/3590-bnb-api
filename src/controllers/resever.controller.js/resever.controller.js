@@ -1,3 +1,4 @@
+import HouseForRent from "../../models/product.schema/housesForRent.schema";
 import Resever from "../../models/reserver/reserverSchema";
 
 class ReseverController {
@@ -19,7 +20,22 @@ class ReseverController {
 
   async getBookingHouse(req,res) {
     try{
-        let id = req.params.id
+        let id = req.params.id;
+        let houseId = await HouseForRent.find({userId: id}).select("userId")
+        
+        let listHouseIds = [];
+        for (const h of houseId) {
+          listHouseIds.push( h._id.toString())
+        }
+
+        let listBooking = await Resever.find({houseId: {'$in': listHouseIds}});
+
+  
+
+        return res.status(200).json({
+            message: "succes",
+            listBooking: listBooking,
+        })
         
     }catch(err){
         return res.status(404).json({
