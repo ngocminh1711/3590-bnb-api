@@ -62,8 +62,8 @@ class ProductController {
       let id = req.params.id;
 
       let houseForRent = await HouseForRent.findOne({ _id: id })
-        .populate("typeRoom")
-        .populate("status");
+          .populate("typeRoom")
+          .populate("status");
 
       return res.status(200).json({
         status: "success",
@@ -81,8 +81,8 @@ class ProductController {
   async getHouseForRent(req, res) {
     try {
       let houseForRents = await HouseForRent.find()
-        .populate("typeRoom")
-        .populate("status");
+          .populate("typeRoom")
+          .populate("status");
       return res.status(200).send({
         status: "success",
         message: "Get house for rent successfully",
@@ -172,8 +172,8 @@ class ProductController {
         });
       } else {
         return res
-          .status(404)
-          .json({ status: "top house not found", message: "Get top error" });
+            .status(404)
+            .json({ status: "top house not found", message: "Get top error" });
       }
     } catch (err) {
       res.status(404).json({
@@ -182,21 +182,6 @@ class ProductController {
       });
       console.log(err.message);
     }
-  }
-  async updateHouse(req, res) {
-    try {
-      let data = req.body;
-      let id = req.params.id;
-
-
-      await HouseForRent.findByIdAndUpdate(id,data)
-
-      return res.status(200).json({ status: "success" , message: "Update successfully"})
-    }
-    catch (err) {
-      return  res.status(404).json({ status: "error", message: "Update error"})
-    }
-
   }
 
   async getVipHouse(req, res) {
@@ -214,8 +199,8 @@ class ProductController {
         });
       } else {
         return res
-          .status(404)
-          .json({ status: "not found", message: "Get Vip House error" });
+            .status(404)
+            .json({ status: "not found", message: "Get Vip House error" });
       }
     } catch (err) {
       res.status(404).json({ status: "error", message: "not found" });
@@ -240,8 +225,8 @@ class ProductController {
         });
       } else {
         return res
-          .status(404)
-          .json({ status: "not found", message: "Get Normal House error" });
+            .status(404)
+            .json({ status: "not found", message: "Get Normal House error" });
       }
     } catch (err) {
       res.status(404).json({ status: "error", message: "not found" });
@@ -259,8 +244,8 @@ class ProductController {
         });
       } else {
         return res
-          .status(404)
-          .json({ status: "not found", message: "Get One bed room error" });
+            .status(404)
+            .json({ status: "not found", message: "Get One bed room error" });
       }
     } catch (err) {
       res.status(404).json({ status: "error", message: "not found bed room " });
@@ -293,8 +278,8 @@ class ProductController {
     try {
       let id = req.params.id;
       let userHouse = await HouseForRent.find({ userId: id })
-        .populate("typeRoom")
-        .populate("status");
+          .populate("typeRoom")
+          .populate("status");
       return res.status(200).send({
         status: "success",
         message: "Get user's house successfully",

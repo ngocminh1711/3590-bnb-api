@@ -23,10 +23,10 @@ export const editProfileUser = async (req, res, next) => {
   try{
     let id = req.params.id;
     let data = req.body;
-      let user = await UserGoogle.findByIdAndUpdate(id, data) ||await User.findByIdAndUpdate(id, data);
-      return res.status(200).json({
-        message: "update success"
-      })
+    let user = await UserGoogle.findByIdAndUpdate(id, data) ||await User.findByIdAndUpdate(id, data);
+    return res.status(200).json({
+      message: "update success"
+    })
   }catch(err){
     res.status(401).json({
       message: "change failed"
@@ -38,7 +38,7 @@ export const getProfileUser = async (req, res, next) => {
   try {
     let id = req.params.id;
     let user =
-      await UserGoogle.findOne({ _id: id }) || await User.findOne({ _id: id });
+        await UserGoogle.findOne({ _id: id }) || await User.findOne({ _id: id });
     return res.status(200).json({
       status: "success",
       message: "Get user information successful",
@@ -48,6 +48,6 @@ export const getProfileUser = async (req, res, next) => {
     res.json({
       status: 'error',
       message: 'Get user information failure'
-  })
+    })
   }
 };
