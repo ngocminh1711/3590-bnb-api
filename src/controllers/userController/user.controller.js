@@ -5,20 +5,28 @@ import UserGoogle from "../../models/userSchesma/userGoogle.js";
 export const ChangePassword = async (req, res, next) => {
     
   const user = await User.findOne({ _id: req.params.id});
-  
+   console.log(user)
   try {
     if (user) {
-      const isCorrect = bcrypt.compareSync(req.body.currentPassword, user.password);  
+      const isCorrect = bcrypt.compareSync(req.body.currentPassword, user.password);
+      console.log(isCorrect)
       if (isCorrect) {
+        console.log(req.body)
         const salt = await bcrypt.genSalt(10);
+        
         const newPassword = await bcrypt.hash(req.body.newPassword, salt);
+        
+        console.log(req.body.newPassword)
+        
         await User.findOneAndUpdate({_id:req.params.id},{ password: newPassword });
-        res.status(200).json("change success");
+        res.status(200).json({ success: true, data: newPassword });
         console.log(newPassword)
       }
       else{
+        console.log(2)
         res.status(200).json("change failed")
       }
+      
     }
   } catch (err) {
     res.status(403).json("change failed");
