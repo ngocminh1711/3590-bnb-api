@@ -10,7 +10,7 @@ reserverRouter.post("/", (req, res) => {
     .catch((res) => res.status(500).json("Server error"));
 });
 
-reserverRouter.get("/:id", (req, res) => {
+reserverRouter.get("/", (req, res) => {
   reseverController
     .getBookingHouse(req, res)
     .catch((res) => res.status(500).json("Server error"));

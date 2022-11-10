@@ -189,8 +189,8 @@ class ProductController {
       let id = req.params.id;
 
 
-      let houseUpdate = await HouseForRent.findOneAndUpdate(id,data)
-      console.log(houseUpdate)
+      await HouseForRent.findByIdAndUpdate(id,data)
+
       return res.status(200).json({ status: "success" , message: "Update successfully"})
     }
     catch (err) {
