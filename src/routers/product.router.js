@@ -34,9 +34,6 @@ productRouter.get("/", async function (req, res) {
   productController.getHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
 });
 
-// productRouter.get("/:userid", async function (req, res) {
-//   productController.getUserHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
-// });
 
 productRouter.get("/search/:keyword", async (req, res) => {
   productController
