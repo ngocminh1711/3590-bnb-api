@@ -5,7 +5,6 @@ class ReseverController {
     async createResever(req, res) {
         try {
             let data = req.body;
-            console.log(data);
             let booking = new Resever(data)
             await booking.save();
             return res.status(200).json({
