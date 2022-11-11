@@ -6,6 +6,8 @@ const reseverSchema = new Schema({
   checkInDay: Date,
   checkOutDay: Date,
   totalMoney: Number,
+  houseName: String,
+  image: String
   // bookingStatus:
 });
 

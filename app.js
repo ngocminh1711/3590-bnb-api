@@ -21,13 +21,13 @@ app.use("/api/user", userRouter);
 app.use("/api/resever", reserverRouter);
 
 db.connect()
-  .then(() => {
-    console.log("DB connected");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .then(() => {
+        console.log("DB connected");
+    })
+    .catch((err) => {
+        console.log(err.message);
+    });
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on http://localhost:${PORT}`);
+    console.log(`Server is listening on http://localhost:${PORT}`);
 });

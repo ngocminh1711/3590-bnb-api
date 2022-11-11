@@ -1,12 +1,12 @@
-import express from "express";
+import express from 'express';
 import ProductController from "../controllers/product.controller.js";
-import multer from "multer";
-
-
+import multer from 'multer' ;
+import {editProfileUser} from "../controllers/userController/user.controller.js";
+import routerUser from "./user.router.js";
 const upload = multer();
-
 const productRouter = express.Router();
-const productController = new ProductController();
+const productController = new ProductController;
+
 
 productRouter.post("/", upload.none(), async (req, res, next) => {
   productController
@@ -78,6 +78,11 @@ productRouter.get('/:id', async(req,res)=>{
   productController.userHouse(req,res).catch(()=>res.status(500).json('Server error'))
 })
 
+
+productRouter.patch('/edit/:id', async (req,res) => {
+    console.log(1)
+    productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));
+})
 
 export default productRouter;
 
