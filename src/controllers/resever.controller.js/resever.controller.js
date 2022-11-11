@@ -1,11 +1,12 @@
 import HouseForRent from "../../models/product.schema/housesForRent.schema";
+import AdminHistory from "../../models/reserver/adminHistorySchema";
 import Resever from "../../models/reserver/reserverSchema";
 
 class ReseverController {
     async createResever(req, res) {
         try {
             let data = req.body;
-            let booking = new Resever(data)
+            let booking = new Resever(data);
             await booking.save();
             return res.status(200).json({
                 message: "Create success",
@@ -20,14 +21,13 @@ class ReseverController {
     async getBookingHouse(req, res) {
         try {
             let id = req.params.id;
-            let houseId = await HouseForRent.find({userId: id}).select("userId")
+            let houseId = await HouseForRent.find({userId: id}).select("userId");
 
             let listHouseIds = [];
             for (const h of houseId) {
-                listHouseIds.push(h._id.toString())
+                listHouseIds.push(h._id.toString());
             }
-
-            let listBooking = await Resever.find({houseId: {'$in': listHouseIds}});
+            let listBooking = await Resever.find({houseId: {$in: listHouseIds}});
 
 
             return res.status(200).json({
@@ -45,7 +45,7 @@ class ReseverController {
     async getHistoryBooking(req, res) {
         try {
             let id = req.params.id;
-            let data = await Resever.find({ tenantId : id})
+            let data = await Resever.find({tenantId: id})
 
             return res.status(200).json({
                 message: "get history booking successfully",
@@ -58,8 +58,21 @@ class ReseverController {
             })
         }
     }
-}
 
-//add
+    async processingStatus(req, res) {
+        try {
+            let id = req.params.id;
+            let data = req.body;
+            let status = await Resever.findByIdAndUpdate(id, data);
+            return res.status(200).json({
+                message: "update success",
+            });
+        } catch (err) {
+            return res.status(404).json({
+                message: err.message,
+            });
+        }
+    }
+}
 
 export default ReseverController;

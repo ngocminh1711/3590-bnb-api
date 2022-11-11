@@ -1,6 +1,9 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import houseStatus from "../models/product.schema/houseStatusSchema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
+import User from '../models/userSchesma/user.js'
+import UserGoogle from "../models/userSchesma/userGoogle.js";
+
 
 class ProductController {
     async createHouseForRent(req, res) {
@@ -307,23 +310,19 @@ class ProductController {
         }
     }
 
-    // async getUserHouseForRent(req, res) {
-    //     try {
-    //         let userid = req.params.id
-    //         console.log(userid)
-    //         let userHouse = await HouseForRent.findOne({userId: userid}).populate("typeRoom").populate("status");
-    //         return res.status(200).send({
-    //             status: "success",
-    //             message: "Get user's house successfully",
-    //             houseForRents: userHouse,
-    //         });
-    //     } catch (err) {
-    //         return res.json({
-    //             status: "error",
-    //             message: "Error getting user's House",
-    //         });
-    //     }
-    // }
+    async getHost(req, res) {
+        try {
+            let id = req.params.id;
+            let houseById = await HouseForRent.findById(id)
+            let user = await UserGoogle.findOne({_id: houseById.userId}) || await User.findOne({_id: houseById.userId});
+            return res.status(200).json({status: "success", message: 'successfully', host: user})
+        }
+        catch (err) {
+            res.status(404).json({status: "error", message: err.message})
+        }
+
+
+    }
 
 }
 
