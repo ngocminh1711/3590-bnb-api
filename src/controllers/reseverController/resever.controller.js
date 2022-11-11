@@ -31,7 +31,7 @@ class ReseverController {
 
 
             return res.status(200).json({
-                message: "succes",
+                message: "successfully",
                 listBooking: listBooking,
             })
 
@@ -52,7 +52,6 @@ class ReseverController {
                 historyBooking: data
             })
         } catch (err) {
-
             return res.status(404).json({
                 message: err.message,
             })
