@@ -4,6 +4,7 @@ import multer from 'multer' ;
 import {editProfileUser} from "../controllers/userController/user.controller.js";
 import routerUser from "./user.router.js";
 import req from "express/lib/request.js";
+import res from "express/lib/response.js";
 
 const upload = multer()
 
@@ -39,9 +40,6 @@ productRouter.get("/", async function (req, res) {
   productController.getHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
 });
 
-// productRouter.get("/:userid", async function (req, res) {
-//   productController.getUserHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
-// });
 
 productRouter.get("/search/:keyword", async (req, res) => {
   productController
@@ -73,9 +71,11 @@ productRouter.get('/:id', async(req,res)=>{
 
 
 productRouter.patch('/edit/:id', async (req,res) => {
-    console.log(1)
     productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));
 })
-
+productRouter.get('/getHost/:id', async (req,res) =>{
+    productController.getHost(req, res).catch(() => res.status(500).json('Server error'));
+})
+  
 export default productRouter;
 
