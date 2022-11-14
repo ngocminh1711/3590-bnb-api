@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import authRouter from "./src/routers/auth.router.js";
 import userRouter from "./src/routers/user.router.js";
 import reserverRouter from "./src/routers/reserver.router.js";
+import notificationRouter from "./src/routers/notification.router.js";
 const app = express();
 
 const PORT = process.env.PORT || 8000;
@@ -19,6 +20,7 @@ app.use("/api/products", productRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/resever", reserverRouter);
+app.use("/api/notification", notificationRouter);
 
 db.connect()
     .then(() => {
