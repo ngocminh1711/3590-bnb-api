@@ -3,17 +3,30 @@ import bcrypt from "bcryptjs";
 import UserGoogle from "../../models/userSchesma/userGoogle.js";
 
 export const ChangePassword = async (req, res, next) => {
+    
+  const user = await User.findOne({ _id: req.params.id});
+   console.log(user)
   try {
-    const user = await User.findOne({ name: req.body.name });
     if (user) {
-      const isCorrect = bcrypt.compareSync(req.body.password, user.password);
+      const isCorrect = bcrypt.compareSync(req.body.currentPassword, user.password);
+      console.log(isCorrect)
       if (isCorrect) {
-        const newPassword = bcrypt.hash(req.body.password, [10]);
-        await User.updateOne({ password: newPassword });
-        res.status(200).json("change success");
-      } else {
-        res.status(200).json("change failed");
+        console.log(req.body)
+        const salt = await bcrypt.genSalt(10);
+        
+        const newPassword = await bcrypt.hash(req.body.newPassword, salt);
+        
+        console.log(req.body.newPassword)
+        
+        await User.findOneAndUpdate({_id:req.params.id},{ password: newPassword });
+        res.status(200).json({ success: true, data: newPassword });
+        console.log(newPassword)
       }
+      else{
+        console.log(2)
+        res.status(200).json("change failed")
+      }
+      
     }
   } catch (err) {
     res.status(403).json("change failed");
@@ -51,3 +64,39 @@ export const getProfileUser = async (req, res, next) => {
     })
   }
 };
+export  const like=async(req,res)=> {
+  const userId = req.user.id
+  const houseForRentId = req.params.houseForRentId
+  try{
+      await HouseForRent.findByIdAndUpdate(houseForRentId,{
+        $addtoSet:{likes :userId},
+        $pull:{dislikes:userId}
+      })
+    res.status(200).json("like success")
+  }
+  
+  catch (err) {
+    res.status(404).json({
+      status: "error",
+      message: "houseForRent not found ",
+    });
+  }
+}
+export  const dislike=async(req,res)=> {
+const userId = req.user.id
+const houseForRentId = req.params.houseForRentId
+try{
+    await HouseForRent.findByIdAndUpdate(houseForRentId,{
+      $addtoSet:{dislikes :userId},
+      $pull:{likes:userId}
+    })
+  res.status(200).json("like success")
+}
+
+catch (err) {
+  res.status(404).json({
+    status: "error",
+    message: "houseForRent not found ",
+  });
+}
+}
