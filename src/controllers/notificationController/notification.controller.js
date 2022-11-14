@@ -23,7 +23,7 @@ class NotificationController {
     async getNotification(req, res) {
         try {
             let id = req.params.id;
-            let data = await Notification.find({ $or: [{tenantId: id}, {hostId : id}]}).populate('booking').populate('house')
+            let data = await Notification.find({hostId : id}).populate('booking').populate('house')
             res.status(200).json({message: "successfully", notification: data})
         } catch (err) {
             return res.status(404).json({message: err.message});
