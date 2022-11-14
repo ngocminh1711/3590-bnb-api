@@ -33,4 +33,8 @@ reserverRouter.post("/history/admin", (req, res) => {
     .catch((res) => res.status(500).json("Server error"));
 });
 
+reserverRouter.delete("/history-booking/delete/:id", (req,res) => {
+  reseverController.deleteBooking(req,res).catch((res) => res.status(500).json("Server error"))
+})
+
 export default reserverRouter;
