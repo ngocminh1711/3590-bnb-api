@@ -8,7 +8,7 @@ const notificationRouter = express.Router();
 const notificationController = new NotificationController();
 
 
-notificationRouter.post('/:id', function (req, res) {
+notificationRouter.post('/create', function (req, res) {
     notificationController.createNotification(req, res).catch(err => { res.status(500).json({error: err.message})});
 })
 
