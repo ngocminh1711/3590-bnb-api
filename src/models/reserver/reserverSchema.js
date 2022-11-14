@@ -7,8 +7,11 @@ const reseverSchema = new Schema({
   checkOutDay: Date,
   totalMoney: Number,
   houseName: String,
-  image: String
-  // bookingStatus:
+  image: String,
+  bookingStatus: {
+    type: String,
+    default: "Processing ..."
+  }
 });
 
 const Resever = mongoose.model("Resever", reseverSchema);
