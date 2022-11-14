@@ -4,7 +4,6 @@ const housesForRentSchema = new Schema({
   userId:String,
   name: String,
   address: String,
-  // status: { type: String, default: "empty" },
   typeRoom: { type: Schema.Types.ObjectId, ref: "TypeRoom" },
   numberOfBedrooms: Number,
   renter: { type: String, default: "no renter" },

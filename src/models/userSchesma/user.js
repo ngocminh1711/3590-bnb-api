@@ -36,7 +36,7 @@ const UserSchesma = new Schema(
             default: "user",
         },
         phone: {
-            type: Number,
+            type: String,
             default: "",
         },
         address: {
