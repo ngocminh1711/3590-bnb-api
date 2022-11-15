@@ -15,7 +15,8 @@ export const ChangePassword = async (req, res, next) => {
                 await User.findOneAndUpdate({_id: req.params.id}, {password: newPassword});
                 res.status(200).json({success: true, data: newPassword});
             } else {
-                res.status(200).json("change failed")
+                res.status(403).json("change failed")
+                console.log(1)
             }
 
         }
@@ -41,8 +42,7 @@ export const editProfileUser = async (req, res, next) => {
 export const getProfileUser = async (req, res, next) => {
     try {
         let id = req.params.id;
-        let user =
-            await UserGoogle.findOne({_id: id}) || await User.findOne({_id: id});
+        let user = await UserGoogle.findOne({_id: id}) || await User.findOne({_id: id});
         return res.status(200).json({
             status: "success",
             message: "Get user information successful",

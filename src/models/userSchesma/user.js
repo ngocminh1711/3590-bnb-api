@@ -5,6 +5,7 @@ const UserSchesma = new Schema(
         username: {
             type: String,
             require: true,
+            unique:true,
         },
         name: {
             type: String,
@@ -51,4 +52,3 @@ const UserSchesma = new Schema(
 );
 const User = model("user", UserSchesma);
 export default User;
-///
