@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import User from "../../models/userSchesma/user.js";
 export const Register = async (req, res, next) => {
   try {
-    let arrpassword = req.body.password;
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
       const newUser = new User({
@@ -10,9 +9,13 @@ export const Register = async (req, res, next) => {
         email: req.body.email,
         password:hash
       });
+      if(!newUser){
       await newUser.save();
       res.status(200).json({ success: true, data: newUser });
+      }
+      else{res.status(403).json({ success: false, data:"register failed"})}
+      
   } catch (err) {
-    console.log(err);
+            res.status(500).json({message:err.message})
   }
 };
