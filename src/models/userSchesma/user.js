@@ -52,4 +52,3 @@ const UserSchesma = new Schema(
 );
 const User = model("user", UserSchesma);
 export default User;
-///
