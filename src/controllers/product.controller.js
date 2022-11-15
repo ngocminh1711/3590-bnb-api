@@ -315,11 +315,8 @@ class ProductController {
         try {
             let data = req.body;
             let id = req.params.id;
-            await HouseForRent.findByIdAndUpdate(id, data);
-
-            return res
-                .status(200)
-                .json({status: "success", message: "Update successfully"});
+            let houseEdit = await HouseForRent.findByIdAndUpdate(id, data);
+            return res.status(200).json({status: "success", message: "Update successfully" , houseEdit: houseEdit});
         } catch (err) {
             return res.status(404).json({status: "error", message: "Update error"});
         }
@@ -399,19 +396,6 @@ class ProductController {
             }
         } catch (err) {
             res.status(404).json({status: 'error', message: err.message})
-        }
-    }
-
-    async updateHouse(req, res) {
-        try {
-            let data = req.body;
-            let id = req.params.id;
-
-            await HouseForRent.findByIdAndUpdate(id, data)
-
-            return res.status(200).json({status: "success", message: "Update successfully"})
-        } catch (err) {
-            return res.status(404).json({status: "error", message: "Update error"})
         }
     }
 

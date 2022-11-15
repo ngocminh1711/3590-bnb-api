@@ -12,10 +12,7 @@ const housesForRentSchema = new Schema({
   description: String,
   image_backdrop: String,
   image_view: [],
-
   numberOfTenants: Number,
-  likes: { type: [String], default: [] },
-  dislikes:{ type: [String], default: [] },
   status: {
     type: Schema.Types.ObjectId,
     ref: "houseStatus",
