@@ -7,12 +7,8 @@ import req from "express/lib/request.js";
 import res from "express/lib/response.js";
 
 const upload = multer()
-
-
 const productRouter = express.Router();
 const productController = new ProductController;
-
-
 productRouter.post("/", upload.none(), async (req, res, next) => {
   productController
     .createHouseForRent(req, res, next)
@@ -35,12 +31,9 @@ productRouter.get("/get-house-for-rent-by-id/:id", async (req, res, next) => {
     .getHouseForRentById(req, res, next)
     .catch((res) => res.status(500).json("Server error"));
 });
-
 productRouter.get("/", async function (req, res) {
   productController.getHouseForRent(req, res).catch((res) => res.status(500).json("Server error"));
 });
-
-
 productRouter.get("/search/:keyword", async (req, res) => {
   productController
     .searchHouseForRent(req, res)
@@ -83,8 +76,6 @@ productRouter.get('/than1000', async (req,res,next) =>{
 productRouter.get('/:id', async(req,res)=>{
   productController.userHouse(req,res).catch(()=>res.status(500).json('Server error'))
 })
-
-
 productRouter.patch('/edit/:id', async (req,res) => {
     console.log(1)
     productController.updateHouse(req, res).catch(() => res.status(500).json("Server error"));

@@ -37,6 +37,7 @@ export const editProfileUser = async (req, res, next) => {
     let id = req.params.id;
     let data = req.body;
     let user = await UserGoogle.findByIdAndUpdate(id, data) ||await User.findByIdAndUpdate(id, data);
+    console.log(user)
     return res.status(200).json({
       message: "update success"
     })
