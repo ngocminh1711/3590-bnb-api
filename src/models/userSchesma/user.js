@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, {Schema, model} from "mongoose";
 
 const UserSchesma = new Schema(
     {
@@ -20,7 +20,7 @@ const UserSchesma = new Schema(
             require: true,
             unique: true,
         },
-        password: { type: String },
+        password: {type: String},
         image: {
             type: String,
             default:
@@ -47,7 +47,7 @@ const UserSchesma = new Schema(
             type: String
         }
     },
-    { timestamps: true }
+    {timestamps: true}
 );
 const User = model("user", UserSchesma);
 export default User;
