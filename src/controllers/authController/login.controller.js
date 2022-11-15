@@ -27,7 +27,7 @@ class AuthController {
         let payload = {
           id: user._id,
           username: user.username,
-          name: req.body.name,
+          name: user.name,
           email: user.email,
           image: user.image,
           backdrop_Image: user.backdrop_Image,
