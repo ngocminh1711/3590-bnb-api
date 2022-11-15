@@ -83,5 +83,10 @@ productRouter.get('/getHost/:id', async (req, res) => {
     productController.getHost(req, res).catch(() => res.status(500).json('Server error'));
 })
 
+
+productRouter.patch('/chang-status-product/:id', async(req,res)=>{
+  productController.changeStatusProduct(req,res).catch(() => res.status(500).json("Server error"))
+})
+  
 export default productRouter;
 

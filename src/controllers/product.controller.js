@@ -1,9 +1,8 @@
 import HouseForRent from "../models/product.schema/housesForRent.schema.js";
 import houseStatus from "../models/product.schema/houseStatusSchema.js";
 import TypeRoom from "../models/product.schema/typeRooms.schema.js";
-import User from '../models/userSchesma/user.js'
+import User from "../models/userSchesma/user.js";
 import UserGoogle from "../models/userSchesma/userGoogle.js";
-
 
 class ProductController {
     async createHouseForRent(req, res) {
@@ -313,6 +312,20 @@ class ProductController {
         }
     }
 
+    async updateHouse(req, res) {
+        try {
+            let data = req.body;
+            let id = req.params.id;
+            await HouseForRent.findByIdAndUpdate(id, data);
+
+            return res
+                .status(200)
+                .json({status: "success", message: "Update successfully"});
+        } catch (err) {
+            return res.status(404).json({status: "error", message: "Update error"});
+        }
+    }
+
     async getMultipleBathRoom(req, res) {
         try {
             let multipleBathRoom = await HouseForRent.find({numberOfBathrooms: {$in: [2, 3]}})
@@ -412,10 +425,28 @@ class ProductController {
         } catch (err) {
             res.status(404).json({status: "error", message: err.message})
         }
-
-
     }
 
+    async changeStatusProduct(req, res) {
+        try {
+            let id = req.params.id;
+            let data = req.body;
+            let statusHouse = await HouseForRent.findByIdAndUpdate(id,
+                {
+                    $set: {
+                        status: data.status._id
+                    }
+                }, {returnDocument: 'after'})
+                .populate("typeRoom")
+                .populate("status")
+            ;
+            return res
+                .status(200)
+                .json({status: "success", message: "Update successfully"});
+        } catch {
+            res.status(404).json({status: "error", message: err.message});
+        }
+    }
 }
 
 export default ProductController;
