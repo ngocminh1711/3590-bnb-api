@@ -62,7 +62,6 @@ class ProductController {
     async getHouseForRentById(req, res) {
         try {
             let id = req.params.id;
-
             let houseForRent = await HouseForRent.findOne({_id: id})
                 .populate("typeRoom")
                 .populate("status");
