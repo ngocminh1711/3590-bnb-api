@@ -6,12 +6,16 @@ const housesForRentSchema = new Schema({
   address: String,
   typeRoom: { type: Schema.Types.ObjectId, ref: "TypeRoom" },
   numberOfBedrooms: Number,
+  renter: { type: String, default: "no renter" },
   numberOfBathrooms: Number,
   roomRates: Number,
   description: String,
   image_backdrop: String,
   image_view: [],
+
   numberOfTenants: Number,
+  likes: { type: [String], default: [] },
+  dislikes:{ type: [String], default: [] },
   status: {
     type: Schema.Types.ObjectId,
     ref: "houseStatus",
