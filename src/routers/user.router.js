@@ -4,7 +4,7 @@ import {
   getProfileUser,
   editProfileUser,
   like,
-  dislike,
+  dislike, editAvatar,
 } from "../controllers/userController/user.controller";
 
 const routerUser = express.Router();
@@ -15,4 +15,6 @@ routerUser.patch("/edit/:id", editProfileUser);
 
 routerUser.put("/like/:houseForRentId", like);
 routerUser.put("/dislike/:houseForRentId", dislike);
+
+routerUser.patch('/editAvatar/:id', editAvatar)
 export default routerUser;
