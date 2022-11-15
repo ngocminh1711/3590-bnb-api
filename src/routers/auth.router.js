@@ -6,7 +6,9 @@ const authRouter = express.Router();
 const authController = new AuthController();
 const googleLogin = new GoogleLoginController();
 authRouter.post('/login',authController.login);
+
 authRouter.post('/register',Register);
+
 authRouter.post('/login/google', googleLogin.loginGoogle)
 
 export default authRouter;
