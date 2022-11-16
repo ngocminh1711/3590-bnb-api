@@ -45,5 +45,6 @@ class AuthController {
     }
   };
 }
+//pull
 
 export default AuthController;
