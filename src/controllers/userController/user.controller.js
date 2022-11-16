@@ -1,7 +1,6 @@
 import User from "../../models/userSchesma/user.js";
 import bcrypt from "bcryptjs";
 import UserGoogle from "../../models/userSchesma/userGoogle.js";
-import user from "../../models/userSchesma/user.js";
 
 export const ChangePassword = async (req, res, next) => {
 

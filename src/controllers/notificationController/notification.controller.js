@@ -1,7 +1,5 @@
 import Notification from "../../models/notificationSchema/notification.schema.js"
 import Resever from "../../models/reserver/reserverSchema.js";
-import {compareSync} from "bcrypt";
-
 
 class NotificationController {
 
