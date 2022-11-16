@@ -5,7 +5,7 @@ import {
     editProfileUser,
     like,
     dislike, editAvatar,
-} from "../controllers/userController/user.controller";
+} from "../controllers/userController/user.controller.js";
 
 const routerUser = express.Router();
 routerUser.put("/change-password/:id", ChangePassword);

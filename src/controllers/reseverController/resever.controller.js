@@ -1,5 +1,5 @@
-import HouseForRent from "../../models/product.schema/housesForRent.schema";
-import Resever from "../../models/reserver/reserverSchema";
+import HouseForRent from "../../models/product.schema/housesForRent.schema.js";
+import Resever from "../../models/reserver/reserverSchema.js";
 
 class ReseverController {
     async createResever(req, res) {
