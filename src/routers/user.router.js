@@ -1,7 +1,19 @@
-import express from 'express';
-import { ChangePassword } from '../controllers/userController/user.controller';
-const routerUser = express.Router()
+import express from "express";
+import {
+    ChangePassword,
+    getProfileUser,
+    editProfileUser,
+    like,
+    dislike, editAvatar,
+} from "../controllers/userController/user.controller";
 
-routerUser.post('/change-password',ChangePassword)
+const routerUser = express.Router();
+routerUser.put("/change-password/:id", ChangePassword);
+routerUser.get("/:id", getProfileUser);
+routerUser.patch("/edit/:id", editProfileUser);
 
-export default routerUser
+routerUser.put("/like/:houseForRentId", like);
+routerUser.put("/dislike/:houseForRentId", dislike);
+
+routerUser.patch('/editAvatar/:id', editAvatar)
+export default routerUser;
