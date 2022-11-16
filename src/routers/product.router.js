@@ -1,10 +1,6 @@
 import express from 'express';
 import ProductController from "../controllers/product.controller.js";
 import multer from 'multer' ;
-import {editProfileUser} from "../controllers/userController/user.controller.js";
-import routerUser from "./user.router.js";
-import req from "express/lib/request.js";
-import res from "express/lib/response.js";
 
 const upload = multer()
 const productRouter = express.Router();
