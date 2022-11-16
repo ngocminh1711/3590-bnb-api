@@ -1,5 +1,4 @@
 import HouseForRent from "../../models/product.schema/housesForRent.schema";
-import AdminHistory from "../../models/reserver/adminHistorySchema";
 import Resever from "../../models/reserver/reserverSchema";
 
 class ReseverController {
